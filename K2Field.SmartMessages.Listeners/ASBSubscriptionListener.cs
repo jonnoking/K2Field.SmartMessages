@@ -73,7 +73,14 @@ namespace K2Field.SmartMessages.Listeners
                         }
                     }
 
-                    m.Body = Newtonsoft.Json.JsonConvert.DeserializeObject(JsonEvent);
+                    if (JsonEvent.StartsWith("{"))
+                    {
+                        m.Body = Newtonsoft.Json.JsonConvert.DeserializeObject(JsonEvent);
+                    }
+                    else
+                    {
+                        m.Body = JsonEvent;
+                    }
 
                     string mJson = Newtonsoft.Json.JsonConvert.SerializeObject(m);
 
