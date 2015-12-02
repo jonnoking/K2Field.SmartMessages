@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "K2Field.SmartMessages.Listeners", "K2Field.SmartMessages.Listeners\K2Field.SmartMessages.Listeners.csproj", "{BAD26E04-7D91-475F-B8B8-A0B2A8A79814}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "K2Field.SmartMessages.Processor", "K2Field.SmartMessages.Processor\K2Field.SmartMessages.Processor.csproj", "{234A97A7-5DF3-41D0-BA92-5D22B72F333D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BAD26E04-7D91-475F-B8B8-A0B2A8A79814}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAD26E04-7D91-475F-B8B8-A0B2A8A79814}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAD26E04-7D91-475F-B8B8-A0B2A8A79814}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAD26E04-7D91-475F-B8B8-A0B2A8A79814}.Release|Any CPU.Build.0 = Release|Any CPU
+		{234A97A7-5DF3-41D0-BA92-5D22B72F333D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{234A97A7-5DF3-41D0-BA92-5D22B72F333D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{234A97A7-5DF3-41D0-BA92-5D22B72F333D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{234A97A7-5DF3-41D0-BA92-5D22B72F333D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
