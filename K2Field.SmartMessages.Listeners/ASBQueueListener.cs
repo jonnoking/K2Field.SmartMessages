@@ -31,7 +31,8 @@ namespace K2Field.SmartMessages.Listeners
         public void InitWithConfig(SmartMessageFrameworkContext frameworkContext, string listenerInstanceFQN, string configString)
         {
             _frameWorkContext = frameworkContext;
-
+            //Console.WriteLine("--CONFIG STRING {0}: {1}", _listenerInstanceFQN, configString);
+            
             dynamic config = Newtonsoft.Json.JsonConvert.DeserializeObject(configString);
             string connectionString = config.connectionString;
             QueueName = config.queueName;
@@ -39,6 +40,10 @@ namespace K2Field.SmartMessages.Listeners
             Console.WriteLine("--Config {0}: {1} {2}", _listenerInstanceFQN, QueueName, connectionString);
 
             //var namespaceManager = NamespaceManager.CreateFromConnectionString(connectionString);
+
+
+            //Console.WriteLine("--QUEUENAME {0}: {1}", _listenerInstanceFQN, QueueName);
+            //Console.WriteLine("--CONNECTION STRING {0}: {1}", _listenerInstanceFQN, connectionString);
 
             Client = QueueClient.CreateFromConnectionString(connectionString, QueueName);
             _listenerInstanceFQN = listenerInstanceFQN;
@@ -67,18 +72,23 @@ namespace K2Field.SmartMessages.Listeners
 
                     dynamic m = new System.Dynamic.ExpandoObject();
                     m.BrokeredMessage = Newtonsoft.Json.JsonConvert.DeserializeObject(brokeredMessageJson);
-                    
-                    if (!receivedMessage.IsBodyConsumed)
-                    {
-                        using (Stream stream = receivedMessage.GetBody<Stream>())
-                        {
-                            using (StreamReader reader = new StreamReader(stream))
-                            {
-                                JsonEvent = reader.ReadToEnd();
-                            }
-                        }
-                    }
 
+                    //http://abhishekrlal.com/2012/03/30/formatting-the-content-for-service-bus-messages/
+                    //// Needed for ASB Broker
+                    //if (!receivedMessage.IsBodyConsumed)
+                    //{
+                    //    using (Stream stream = receivedMessage.GetBody<Stream>())
+                    //    {
+                    //        using (StreamReader reader = new StreamReader(stream))
+                    //        {
+                    //            JsonEvent = reader.ReadToEnd();
+                    //        }
+                    //    }
+                    //}
+
+                    // needed for Event Hub - Stream Analytics
+                    JsonEvent = receivedMessage.GetBody<string>();
+                    
                     if (JsonEvent.StartsWith("{"))
                     {
                         m.Body = Newtonsoft.Json.JsonConvert.DeserializeObject(JsonEvent);
