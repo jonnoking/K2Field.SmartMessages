@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ASBMessage.cs" />
+    <Compile Include="ASBMessageSaveToFile.cs" />
     <Compile Include="ASBMessageSignalRProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
