@@ -22,27 +22,33 @@ namespace K2Field.SmartMessages.Processor
 
         public void ProcessMessage(string MessageID, string MessageData, string sourceListenerInstanceFQN)
         {
-            Console.WriteLine("--Processing Message: {0}", sourceListenerInstanceFQN);
-
-            ASBMessage msg = Newtonsoft.Json.JsonConvert.DeserializeObject<ASBMessage>(MessageData);
-            string body = Newtonsoft.Json.JsonConvert.SerializeObject(msg.Body);
-
-            string filename = DateTime.UtcNow.ToString("yyyMMdd-HHmmss-" + MessageID + ".txt");
-            DirectoryInfo di = null;
-            if (!Directory.Exists(_directory))
+            try
             {
-                di = Directory.CreateDirectory(_directory);
+                Console.WriteLine("--Processing Message: {0}", sourceListenerInstanceFQN);
+
+                ASBMessage msg = Newtonsoft.Json.JsonConvert.DeserializeObject<ASBMessage>(MessageData);
+                string body = Newtonsoft.Json.JsonConvert.SerializeObject(msg.Body);
+
+                string filename = DateTime.UtcNow.ToString("yyyMMdd-HHmmss-" + MessageID + ".txt");
+                DirectoryInfo di = null;
+                if (!Directory.Exists(_directory))
+                {
+                    di = Directory.CreateDirectory(_directory);
+                }
+                else
+                {
+                    di = new DirectoryInfo(_directory);
+                }
+
+                string fullpath = di.FullName + @"\" + filename;
+                Console.WriteLine("--Writing File: {0}", fullpath);
+
+                File.WriteAllText(fullpath, body);
             }
-            else
+            catch (Exception ex)
             {
-                di = new DirectoryInfo(_directory);
+                Console.WriteLine(ex.GetBaseException().Message);
             }
-
-            string fullpath = di.FullName + @"\" + filename;
-            Console.WriteLine("--Writing File: {0}", fullpath);
-
-            File.WriteAllText(fullpath, body);
-
         }
     }
 }

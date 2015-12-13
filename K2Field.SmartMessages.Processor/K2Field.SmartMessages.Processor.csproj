@@ -38,6 +38,10 @@
     <Reference Include="SmartMessageInterfaces">
       <HintPath>..\..\..\K2\_From Labs\SmartMessages Build 2\SmartMessage Server\SmartMessageInterfaces.dll</HintPath>
     </Reference>
+    <Reference Include="SourceCode.Workflow.Client, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\K2\_From Labs\SmartMessages Build 2\SmartMessage Server\SourceCode.Workflow.Client.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,6 +54,7 @@
     <Compile Include="ASBMessage.cs" />
     <Compile Include="ASBMessageSaveToFile.cs" />
     <Compile Include="ASBMessageSignalRProcessor.cs" />
+    <Compile Include="StartK2WorkflowProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

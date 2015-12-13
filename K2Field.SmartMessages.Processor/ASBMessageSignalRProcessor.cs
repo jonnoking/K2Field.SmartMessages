@@ -24,28 +24,36 @@ namespace K2Field.SmartMessages.Processor
 
         public void ProcessMessage(string MessageID, string MessageData, string sourceListenerInstanceFQN)
         {
-            Console.WriteLine("--Processing Message: {0}", sourceListenerInstanceFQN);
+            try
+            {
 
-            ASBMessage msg = Newtonsoft.Json.JsonConvert.DeserializeObject<ASBMessage>(MessageData);
+                Console.WriteLine("--Processing Message: {0}", sourceListenerInstanceFQN);
 
-            string group = !string.IsNullOrWhiteSpace(msg.BrokeredMessage.To) ? _defaultGroupName +","+msg.BrokeredMessage.To : _defaultGroupName; 
+                ASBMessage msg = Newtonsoft.Json.JsonConvert.DeserializeObject<ASBMessage>(MessageData);
 
-            string url = _notificationUrl;
-            url += "?group=" + group;
+                string group = !string.IsNullOrWhiteSpace(msg.BrokeredMessage.To) ? _defaultGroupName + "," + msg.BrokeredMessage.To : _defaultGroupName;
 
-            string name = !string.IsNullOrWhiteSpace(msg.BrokeredMessage.Label) ? msg.BrokeredMessage.Label : DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            url += "&name=" + name;
+                string url = _notificationUrl;
+                url += "?group=" + group;
 
-            string bodyString = Newtonsoft.Json.JsonConvert.SerializeObject(msg.Body);
-            url += "&message=" + bodyString;
+                string name = !string.IsNullOrWhiteSpace(msg.BrokeredMessage.Label) ? msg.BrokeredMessage.Label : DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                url += "&name=" + name;
 
-            url = string.Format("{0}&origin={1}&source={2}&category={3}&type={4}&to={5}&from={6}&data={7}&datatype={8}&actionurl={9}", url, "SmartMessages", sourceListenerInstanceFQN, msg.BrokeredMessage.ContentType, "info", msg.BrokeredMessage.To, "", "", "", "");
+                string bodyString = Newtonsoft.Json.JsonConvert.SerializeObject(msg.Body);
+                url += "&message=" + bodyString;
 
-            Console.WriteLine("\n\n");
-            Console.WriteLine("--SignalR url: {0}", url);
-            Console.WriteLine("\n\n");
+                url = string.Format("{0}&origin={1}&source={2}&category={3}&type={4}&to={5}&from={6}&data={7}&datatype={8}&actionurl={9}", url, "SmartMessages", sourceListenerInstanceFQN, msg.BrokeredMessage.ContentType, "info", msg.BrokeredMessage.To, "", "", "", "");
 
-            CallService(null, url);
+                Console.WriteLine("\n\n");
+                Console.WriteLine("--SignalR url: {0}", url);
+                Console.WriteLine("\n\n");
+
+                CallService(null, url);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.GetBaseException().Message);
+            }
         }
 
 
@@ -76,11 +84,11 @@ namespace K2Field.SmartMessages.Processor
             }
             catch (WebException wex)
             {
-                throw;
+                Console.WriteLine(wex.GetBaseException().Message);
             }
             catch (Exception ex)
             {
-                throw;
+                Console.WriteLine(ex.GetBaseException().Message);
             }
             finally
             {
